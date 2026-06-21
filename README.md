@@ -1,21 +1,21 @@
-# MEDICARE-PRO
+## MEDICARE-PRO
 Encryption / Decryption Application with an Integrity Monitor — Python + AES + PowerShell + SFTP VS Unencrypted Patient Files
 
-# BRIEF DESCRIPTION:
+### BRIEF DESCRIPTION:
 Healthcare staff regularly move patient records between devices using whatever's convenient — email, USB drives, messaging apps — with no encryption and no way to tell afterward if a file was altered in transit. MediCare Pro is a desktop client that puts a security layer in front of that workflow: it encrypts files with AES before they leave the machine, hands the encrypted file off to SFTP for transfer, decrypts it on the receiving end, and runs a separate PowerShell-based integrity monitor that compares transferred files against a known-good baseline and flags an admin if anything's changed. Built for clinical staff who are not IT professionals, so the interface stays deliberately minimal.
 
 IMPORTANT: READ THE FULL REPORT AND USER MANUAL IN /docs FOR DESIGN RATIONALE, DIAGRAMS, AND THE INTEGRITY MONITOR SCRIPT
 
-# SYSTEM TYPE:
+### SYSTEM TYPE:
 DESKTOP CLIENT FOR ENCRYPTED CLINICAL FILE EXCHANGE
 
-# PRIMARY FUNCTION
+### PRIMARY FUNCTION
 
 The application authenticates a user locally, then offers two paths: encrypt a file and push it out over SFTP, or pull an encrypted file down and decrypt it. A companion PowerShell script runs independently of the GUI, hashing watched files on a schedule and alerting an admin role through an HTML notification page if a file's hash no longer matches its baseline. The solution is catered toward doctors, not system administrators — every security control is wrapped behind a single button (Encrypt, Upload, Decrypt, Download).
 
-# PURPOSE & GOALS
+### PURPOSE & GOALS
 
-## Primary Goals:
+#### Primary Goals:
 Give clinical staff a way to encrypt and exchange patient files without requiring any cryptography knowledge — the user picks files and clicks a button, the application handles AES encryption, key selection, and the SFTP hand-off.
 Replace ad hoc sharing over email/USB/chat apps with a single SFTP-based transfer path, and give an admin role visibility into whether transferred files have been tampered with, rather than relying on staff to check manually.
 Keep the system buildable entirely from open building blocks the team already had access to during the course — Python, PowerShell, IIS — rather than a commercial DLP or encryption suite.
