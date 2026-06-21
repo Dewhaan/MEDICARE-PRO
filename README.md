@@ -47,34 +47,31 @@ IIS + server.js notification page — where the admin's integrity alerts surface
 
 Three tiers: a presentation tier (the Tkinter GUI), an application tier (encryption/decryption, integrity monitoring, SFTP integration), and a data tier (stored file hashes).
 
-![Uploading image.png…]()
+<img width="838" height="515" alt="image" src="https://github.com/user-attachments/assets/2ca13190-1eb8-4785-98bf-cd07c7562af3" />
 
 
+# APPLICATION SCREENS
 
-APPLICATION SCREENS
-
-<p align="center">
-  <img src="assets/screenshots/03-encryption-window.png" width="48%" alt="Encryption window">
-  <img src="assets/screenshots/04-decryption-window.png" width="48%" alt="Decryption window">
-</p>
+<img width="838" height="515" alt="image" src="https://github.com/user-attachments/assets/9b759179-c417-48d8-96fe-922dba99cdc0" />
 
 Encryption window — browse files, encrypt (produces a .ecry file and deletes the plaintext original), upload via WinSCP.
+
+<img width="831" height="522" alt="image" src="https://github.com/user-attachments/assets/5f14674a-e973-40f5-9ff9-46ca6a19682f" />
+
 Decryption window — download via WinSCP or browse to an existing .ecry file, decrypt back to the original.
 
 
-FILE SHARING / INTEGRITY FLOW
+# FILE SHARING / INTEGRITY FLOW
 
 How a file actually moves through the system, and where the integrity monitor sits relative to that flow:
 
-<p align="center">
-  <img src="assets/diagrams/use-case-diagram.png" width="70%" alt="File sharing and integrity monitoring flow">
-</p>
+<img width="797" height="1035" alt="image" src="https://github.com/user-attachments/assets/d8d4c61c-1886-4e5b-9b60-59592591e017" />
+
 A sender encrypts a file and uploads it to the server over SFTP. A recipient locates the encrypted file on the server, downloads it, and decrypts it locally. Independently of both, an admin role watches the server for integrity drift and pushes a notification if a transferred file doesn't match its expected hash — that notification is what staff see when they click "Notifications from Admin."
 
-LIMITATIONS
+# LIMITATIONS
 
 This was built and assessed as a capstone proof-of-concept, not hardened against attack. Worth knowing before reusing any of it:
-
 
 Key reuse, not per-file keys. random.choice() picks one key from a small pre-shared pool rather than generating a unique key per file or session. The same key can decrypt multiple unrelated files, and that pool has to reach every client out-of-band.
 Unsalted, single-round SHA-256 for passwords, stored in a local flat file with no rate limiting on login attempts.
@@ -83,19 +80,17 @@ No automated tests.
 Notification channel is a fixed local/intranet URL, not a configurable endpoint.
 
 
-SETUP
+# SETUP
 
 bashgit clone https://github.com/<your-username>/medicare-pro.git
 cd medicare-pro
 pip install -r requirements.txt
 
-Before running, you'll need to:
-
+## Before running, you'll need to:
 
 Replace the hardcoded paths in MediCare_Pro.py — the background image, the icon set (Browse_file_icon, encrypt_file_icon, Upload_icon, HTML_Url_icon, decrypt_file_icon, download_icon), the WinSCP executable, the Chrome executable, and the user guide path currently all point at one developer's local filesystem.
 Supply your own icon set and background image — not included in this repo.
 Create Random_key.txt in the working directory, one hex-encoded AES key per line. This holds the actual encryption keys, so it's gitignored — never commit it.
-
 
 bash   python3 -c "import secrets; print(secrets.token_hex(32))" >> Random_key.txt
 
@@ -103,7 +98,7 @@ Requires Python 3.9+, python3-tk on Linux, WinSCP, and Chrome (the notification 
 
 bashpython MediCare_Pro.py
 
-REPOSITORY STRUCTURE
+# REPOSITORY STRUCTURE
 
 medicare-pro/
 ├── README.md
@@ -120,28 +115,10 @@ medicare-pro/
 
 MediCare_Pro.py is the version to run. Earlier development iterations (main.py, Test.py, final.py, FinalCode.py, 5th.py, 20update__1_.py, SampleUI.py) trace the build-up from a CLI Fernet script to the full AES/Tkinter application — worth keeping for the history, but consider moving them into an archive/ folder so the root isn't cluttered. tempCodeRunnerFile.py is a VS Code artifact and can be deleted.
 
-DOCUMENTATION
 
-
-Group D Final Report — design rationale, literature review, architecture, testing
-User Manual — usage walkthrough, including the PowerShell integrity monitor script
-
-
-
-Check the report's cover page before publishing — it lists full student ID numbers alongside names.
-
-
-
-TEAM
-
-Built for CSG3101 — Applied Project, Group D:
-
-
+# TEAM
 Samod Kankanamgamage
 Chanuth Wickramasinghe
 Kavindu Pitigalagewage
 Nivedha Ravindra
 George Ranasinghearachchilage
-
-
-This repository is a portfolio mirror of group coursework — credit is shared across the team, not solely the repo owner.
