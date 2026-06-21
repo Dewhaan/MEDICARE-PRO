@@ -1,27 +1,26 @@
-## MEDICARE-PRO
+# MEDICARE-PRO
 Encryption / Decryption Application with an Integrity Monitor — Python + AES + PowerShell + SFTP VS Unencrypted Patient Files
 
-### BRIEF DESCRIPTION:
+# BRIEF DESCRIPTION:
 Healthcare staff regularly move patient records between devices using whatever's convenient — email, USB drives, messaging apps — with no encryption and no way to tell afterward if a file was altered in transit. MediCare Pro is a desktop client that puts a security layer in front of that workflow: it encrypts files with AES before they leave the machine, hands the encrypted file off to SFTP for transfer, decrypts it on the receiving end, and runs a separate PowerShell-based integrity monitor that compares transferred files against a known-good baseline and flags an admin if anything's changed. Built for clinical staff who are not IT professionals, so the interface stays deliberately minimal.
 
 IMPORTANT: READ THE FULL REPORT AND USER MANUAL IN /docs FOR DESIGN RATIONALE, DIAGRAMS, AND THE INTEGRITY MONITOR SCRIPT
 
-### SYSTEM TYPE:
+# SYSTEM TYPE:
 DESKTOP CLIENT FOR ENCRYPTED CLINICAL FILE EXCHANGE
 
-### PRIMARY FUNCTION
+# PRIMARY FUNCTION
 
 The application authenticates a user locally, then offers two paths: encrypt a file and push it out over SFTP, or pull an encrypted file down and decrypt it. A companion PowerShell script runs independently of the GUI, hashing watched files on a schedule and alerting an admin role through an HTML notification page if a file's hash no longer matches its baseline. The solution is catered toward doctors, not system administrators — every security control is wrapped behind a single button (Encrypt, Upload, Decrypt, Download).
 
-### PURPOSE & GOALS
+# PURPOSE & GOALS
 
-#### Primary Goals:
+## Primary Goals:
 Give clinical staff a way to encrypt and exchange patient files without requiring any cryptography knowledge — the user picks files and clicks a button, the application handles AES encryption, key selection, and the SFTP hand-off.
 Replace ad hoc sharing over email/USB/chat apps with a single SFTP-based transfer path, and give an admin role visibility into whether transferred files have been tampered with, rather than relying on staff to check manually.
 Keep the system buildable entirely from open building blocks the team already had access to during the course — Python, PowerShell, IIS — rather than a commercial DLP or encryption suite.
 
 # FEATURES
-
 The encryption core is built in Python using PyCryptodome's AES implementation in EAX mode, which gives you both confidentiality and an authentication tag, so a decrypt operation also catches whether the ciphertext was modified. Rather than generating a new key per file, the application draws from a pool of pre-shared keys (Random_key.txt) using random.choice() — a deliberate simplification for the project scope, see Limitations.
 
 Authentication is local: on first run the app creates a username/password pair, hashes the password with SHA-256, and stores it in a flat file. Every subsequent launch checks the entered credentials against that stored hash before unlocking the main menu.
@@ -32,10 +31,9 @@ The integrity monitor is a standalone PowerShell script (Integrity.ps1), not par
 
 The GUI itself is plain Tkinter — no animations, no nested menus, three screens deep at most (welcome → menu → encryption/decryption). That was an explicit design constraint: the target user is a doctor, not a developer.
 
-HIGH LEVEL ARCHITECTURE
+# HIGH LEVEL ARCHITECTURE
 
-KEY COMPONENTS
-
+## KEY COMPONENTS
 
 Tkinter GUI client (MediCare_Pro.py) — login, file selection, and the encrypt/decrypt/upload/download controls.
 PyCryptodome AES module — EAX-mode encryption/decryption against a pre-shared key pool.
@@ -45,13 +43,14 @@ PowerShell integrity monitor (Integrity.ps1) — baseline hashing and drift dete
 IIS + server.js notification page — where the admin's integrity alerts surface to staff.
 
 
-SOFTWARE ARCHITECTURE
+# SOFTWARE ARCHITECTURE
 
 Three tiers: a presentation tier (the Tkinter GUI), an application tier (encryption/decryption, integrity monitoring, SFTP integration), and a data tier (stored file hashes).
 
-<p align="center">
-  <img src="assets/diagrams/system-architecture.png" width="70%" alt="System architecture diagram">
-</p>
+![Uploading image.png…]()
+
+
+
 APPLICATION SCREENS
 
 <p align="center">
