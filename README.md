@@ -47,8 +47,7 @@ IIS + server.js notification page — where the admin's integrity alerts surface
 
 Three tiers: a presentation tier (the Tkinter GUI), an application tier (encryption/decryption, integrity monitoring, SFTP integration), and a data tier (stored file hashes).
 
-<img width="838" height="515" alt="image" src="https://github.com/user-attachments/assets/2ca13190-1eb8-4785-98bf-cd07c7562af3" />
-
+<img width="883" height="578" alt="image" src="https://github.com/user-attachments/assets/90c5d766-85e3-457e-8085-9ebb55ae7e03" />
 
 # APPLICATION SCREENS
 
@@ -97,24 +96,6 @@ bash   python3 -c "import secrets; print(secrets.token_hex(32))" >> Random_key.t
 Requires Python 3.9+, python3-tk on Linux, WinSCP, and Chrome (the notification button launches Chrome specifically).
 
 bashpython MediCare_Pro.py
-
-# REPOSITORY STRUCTURE
-
-medicare-pro/
-├── README.md
-├── LICENSE
-├── requirements.txt
-├── .gitignore
-├── MediCare_Pro.py          # main entry point — final, working version
-├── assets/
-│   ├── screenshots/
-│   └── diagrams/
-└── docs/
-    ├── Group_D_Final_Report.pdf
-    └── User_Manual.docx
-
-MediCare_Pro.py is the version to run. Earlier development iterations (main.py, Test.py, final.py, FinalCode.py, 5th.py, 20update__1_.py, SampleUI.py) trace the build-up from a CLI Fernet script to the full AES/Tkinter application — worth keeping for the history, but consider moving them into an archive/ folder so the root isn't cluttered. tempCodeRunnerFile.py is a VS Code artifact and can be deleted.
-
 
 # TEAM
 Samod Kankanamgamage
